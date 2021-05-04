@@ -1,4 +1,6 @@
+
 function ConvertHandler() {
+
   
   this.getNum = function(input) {
     let result;
@@ -38,7 +40,7 @@ function ConvertHandler() {
     
     return result;
   };
-  
+
 }
 
 module.exports = ConvertHandler;
