@@ -43,13 +43,28 @@ suite('Unit Tests', function () {
     assert.isNull(convertHandler.getNum('  2/3mi'));
     assert.isNull(convertHandler.getNum('  mi23/2'));
   });
+
+  test('convertHandler should correctly read a fractional input with a decimal. ', () => {
+    assert.strictEqual(convertHandler.getNum('3.6/1.2'), 3);
+    assert.strictEqual(convertHandler.getNum('1.5/2'), 0.75);
+    assert.strictEqual(convertHandler.getNum('1/2.5'), 0.4);
+
+    assert.strictEqual(convertHandler.getNum('1.5/2.5gal'), 0.6);
+    assert.strictEqual(convertHandler.getNum('1/2.5gal'), 0.4);
+    assert.strictEqual(convertHandler.getNum('1.5/2gal'), 0.75);
+
+    assert.isNull(convertHandler.getNum('mi123.55/34.55'));
+    assert.isNull(convertHandler.getNum('mi123.11/3.0mi'));
+    assert.isNull(convertHandler.getNum('  2.33/3.1mi'));
+    assert.isNull(convertHandler.getNum('  mi23.2/2'));
+  });
 });
 
 /*
 
 
 
-convertHandler should correctly read a fractional input with a decimal.
+
 convertHandler should correctly return an error on a double-fraction (i.e. 3/2/3).
 convertHandler should correctly default to a numerical input of 1 when no numerical input is provided.
 convertHandler should correctly read each valid input unit.

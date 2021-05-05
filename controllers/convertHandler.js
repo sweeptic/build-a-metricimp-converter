@@ -1,13 +1,10 @@
 function ConvertHandler() {
   this.getNum = function (input) {
     let result;
-    // const regex = /^\d+/;
 
-    const regex = /^\d+(\.\d+)|^\d+(\/\d+)?/;
+    const regex = /^\d+(\.\d+)?\/\d+(\.\d+)?|^\d+(\.\d+)?/;
 
     let matches = input.match(regex);
-
-    // result = matches === null ? null : matches[0];
 
     //if any matches
     if (matches !== null) {
