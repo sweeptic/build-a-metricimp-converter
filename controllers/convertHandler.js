@@ -2,17 +2,22 @@ function ConvertHandler() {
   this.getNum = function (input) {
     let result;
 
-    const startsWithDigit = /^\d+(\.\d+)?(\/\d+(\.\d+)?)?/;
+    const startsWithDigit = /^\d+(\.\d+)?(\/\d+(\.\d+)?)?$/;
     const startsWithUnit = /^(gal|L|mi|km|lbs|kg)$/;
 
-    const digitMatches = input.match(startsWithDigit);
+    const firsLetter = /[a-zA-Z]/;
+    const toFirstLetter = input.slice(
+      0,
+      input.match(firsLetter) ? input.match(firsLetter).index : input.length
+    );
+
+    const digitMatches = toFirstLetter.match(startsWithDigit);
     const onlyUnitMatches = input.match(startsWithUnit);
 
     //if starts with valid unit and not digit. this should be 1
     if (onlyUnitMatches) {
       result = 1;
     }
-
     //if any matches
     else if (digitMatches !== null) {
       const match = digitMatches[0];
@@ -30,8 +35,7 @@ function ConvertHandler() {
       }
     } else {
       //if does not matches any
-      result = null;
-      // console.log('invalid number');
+      result = 'invalid number';
     }
 
     return result;

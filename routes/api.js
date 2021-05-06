@@ -8,10 +8,12 @@ module.exports = function (app) {
   app.route('/api/convert').get(function (req, res) {
     const { input } = req.query;
 
-    const result = convertHandler.getNum(input);
+    const resultNum = convertHandler.getNum(input);
+    const resultUnit = convertHandler.getUnit(input);
 
-    console.log(result);
+    console.log(resultNum);
+    // console.log(resultUnit);
 
-    res.json({ data: 'send' });
+    res.json(resultNum);
   });
 };
