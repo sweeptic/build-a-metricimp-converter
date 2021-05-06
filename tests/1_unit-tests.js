@@ -122,17 +122,15 @@ suite('getUnit Unit Tests', function () {
     assert.strictEqual(convertHandler.spellOutUnit('kg'), 'kilograms');
   });
 });
+
+test('convertHandler should correctly convert gal to L. ', () => {});
+test('convertHandler should correctly convert L to gal ', () => {});
+test('convertHandler should correctly convert mi to km ', () => {});
+test('convertHandler should correctly convert km to mi ', () => {});
+test('convertHandler should correctly convert lbs to kg ', () => {});
+test('convertHandler should correctly convert kg to lbs ', () => {});
+
 /*
-
-
-
-
-
-
-
-
-
-
 convertHandler should correctly convert gal to L.
 convertHandler should correctly convert L to gal.
 convertHandler should correctly convert mi to km.

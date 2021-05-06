@@ -1,20 +1,18 @@
 function ConvertHandler() {
   const units = /^(gal|L|mi|km|lbs|kg)$/i;
   const firsLetter = /[a-zA-Z]/;
-  const dictionary = {
-    gal: 'gallons',
-    L: 'liters',
-    mi: 'miles',
-    km: 'kilometers',
-    lbs: 'pounds',
-    kg: 'kilograms',
+  const startsWithDigit = /^\d+(\.\d+)?(\/\d+(\.\d+)?)?$/;
+  const conversionDictionary = {
+    gal: ['gallons', 3.78541, 'L'],
+    L: ['liters', 0.26417, 'gal'],
+    mi: ['miles', 1.60934, 'km'],
+    km: ['kilometers', 0.62137, 'mi'],
+    lbs: ['pounds', 0.45359, 'kg'],
+    kg: ['kilograms', 2.20462, 'lbs'],
   };
 
   this.getNum = function (input) {
     let result;
-
-    const startsWithDigit = /^\d+(\.\d+)?(\/\d+(\.\d+)?)?$/;
-    // const startsWithUnit = /^(gal|L|mi|km|lbs|kg)$/;
 
     const toFirstLetter = input.slice(
       0,
@@ -23,8 +21,6 @@ function ConvertHandler() {
 
     const digitMatches = toFirstLetter.match(startsWithDigit);
     const onlyUnitMatches = input.match(units);
-
-    // console.log(toFirstLetter.length);
 
     //if starts with valid unit and not digit. this should be 1
     if (onlyUnitMatches) {
@@ -68,28 +64,21 @@ function ConvertHandler() {
   };
 
   this.getReturnUnit = function (initUnit) {
-    let result;
-
-    return result;
+    return conversionDictionary[initUnit][2];
   };
 
   this.spellOutUnit = function (unit) {
-    return dictionary[unit];
+    return conversionDictionary[unit][0];
   };
 
   this.convert = function (initNum, initUnit) {
-    const galToL = 3.78541;
-    const lbsToKg = 0.453592;
-    const miToKm = 1.60934;
-    let result;
-
-    return result;
+    return initNum * conversionDictionary[initUnit][1].toFixed(6);
   };
 
   this.getString = function (initNum, initUnit, returnNum, returnUnit) {
-    let result;
-
-    return result;
+    return `${initNum} ${this.spellOutUnit(
+      initUnit
+    )} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`;
   };
 }
 

@@ -11,13 +11,10 @@ module.exports = function (app) {
     const resultNum = convertHandler.getNum(input);
     const resultUnit = convertHandler.getUnit(input);
 
-    console.log(resultNum);
-    console.log(resultUnit);
-
     let resultString;
     let convertedResultObj;
 
-    //if get some false from getNum or/and getUnit function.
+    //if get some false(invalid) from getNum or/and getUnit function.
     if (!resultNum || !resultUnit) {
       if (!resultNum && !resultUnit) {
         resultString = 'invalid number and unit';
@@ -27,17 +24,21 @@ module.exports = function (app) {
         resultString = 'invalid unit';
       }
     } else {
-      const convertedResult = convertHandler.convert(resultNum, resultUnit);
+      const convertedNum = convertHandler.convert(resultNum, resultUnit);
+      const convertedUnit = convertHandler.getReturnUnit(resultUnit);
 
-      resultString = `${resultNum} ${convertHandler.spellOutUnit(
-        resultUnit
-      )} converts to `;
+      resultString = convertHandler.getString(
+        resultNum,
+        resultUnit,
+        convertedNum,
+        convertedUnit
+      );
 
       convertedResultObj = {
         initNum: resultNum,
         initUnit: resultUnit,
-        returnNum: 'none',
-        returnUnit: 'none',
+        returnNum: convertedNum,
+        returnUnit: convertedUnit,
         string: resultString,
       };
     }
