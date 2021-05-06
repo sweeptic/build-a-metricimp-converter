@@ -12,8 +12,20 @@ module.exports = function (app) {
     const resultUnit = convertHandler.getUnit(input);
 
     console.log(resultNum);
-    // console.log(resultUnit);
+    console.log(resultUnit);
 
-    res.json(resultNum);
+    let result;
+
+    if (!resultNum || !resultUnit) {
+      if (!resultNum && !resultUnit) {
+        result = 'invalid number and unit';
+      } else if (!resultNum) {
+        result = 'invalid number';
+      } else {
+        result = 'invalid unit';
+      }
+    }
+
+    res.json(result);
   });
 };

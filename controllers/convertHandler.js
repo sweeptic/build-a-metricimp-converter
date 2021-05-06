@@ -14,11 +14,19 @@ function ConvertHandler() {
     const digitMatches = toFirstLetter.match(startsWithDigit);
     const onlyUnitMatches = input.match(startsWithUnit);
 
+    // console.log(toFirstLetter.length);
+
     //if starts with valid unit and not digit. this should be 1
     if (onlyUnitMatches) {
       result = 1;
     }
+
+    // else if (toFirstLetter.length === 0) {
+    //   return;
+    // }
+    //
     //if any matches
+    //
     else if (digitMatches !== null) {
       const match = digitMatches[0];
 
@@ -29,13 +37,13 @@ function ConvertHandler() {
           match.slice(0, match.indexOf('/')) /
           match.slice(match.indexOf('/') + 1, match.length);
       } else {
-        //
         //else is whole or decimal number
         result = +digitMatches[0];
       }
-    } else {
-      //if does not matches any
-      result = 'invalid number';
+    }
+    //if does not matches any
+    else {
+      result = false;
     }
 
     return result;
@@ -43,6 +51,19 @@ function ConvertHandler() {
 
   this.getUnit = function (input) {
     let result;
+
+    const units = /^(gal|L|mi|km|lbs|kg)$/;
+    const firsLetter = /[a-zA-Z]/;
+
+    const fromFirstLetter = input.slice(
+      input.match(firsLetter) ? input.match(firsLetter).index : input.length
+    );
+
+    // const onlyUnitMatches = fromFirstLetter.match(units);
+
+    result = fromFirstLetter.match(units) ? fromFirstLetter : false;
+
+    // console.log(fromFirstLetter);
 
     return result;
   };
