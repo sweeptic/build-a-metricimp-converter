@@ -1,9 +1,9 @@
 function ConvertHandler() {
-  const units = /^(gal|L|mi|km|lbs|kg)$/;
+  const units = /^(gal|L|mi|km|lbs|kg)$/i;
   const firsLetter = /[a-zA-Z]/;
   const dictionary = {
     gal: 'gallons',
-    L: 'L',
+    L: 'liters',
     mi: 'miles',
     km: 'kilometers',
     lbs: 'pounds',
@@ -60,7 +60,11 @@ function ConvertHandler() {
       input.match(firsLetter) ? input.match(firsLetter).index : input.length
     );
 
-    return fromFirstLetter.match(units) ? dictionary[fromFirstLetter] : false;
+    return fromFirstLetter.match(units)
+      ? fromFirstLetter === 'L' || fromFirstLetter === 'l'
+        ? 'L'
+        : fromFirstLetter.toLowerCase()
+      : false;
   };
 
   this.getReturnUnit = function (initUnit) {
@@ -70,9 +74,7 @@ function ConvertHandler() {
   };
 
   this.spellOutUnit = function (unit) {
-    let result;
-
-    return result;
+    return dictionary[unit];
   };
 
   this.convert = function (initNum, initUnit) {

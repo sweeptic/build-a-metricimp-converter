@@ -14,21 +14,34 @@ module.exports = function (app) {
     console.log(resultNum);
     console.log(resultUnit);
 
-    let result = 'default';
+    let resultString;
+    let convertedResultObj;
 
     //if get some false from getNum or/and getUnit function.
     if (!resultNum || !resultUnit) {
       if (!resultNum && !resultUnit) {
-        result = 'invalid number and unit';
+        resultString = 'invalid number and unit';
       } else if (!resultNum) {
-        result = 'invalid number';
+        resultString = 'invalid number';
       } else {
-        result = 'invalid unit';
+        resultString = 'invalid unit';
       }
     } else {
-      result = `${resultNum} ${resultUnit} converts to `;
+      const convertedResult = convertHandler.convert(resultNum, resultUnit);
+
+      resultString = `${resultNum} ${convertHandler.spellOutUnit(
+        resultUnit
+      )} converts to `;
+
+      convertedResultObj = {
+        initNum: resultNum,
+        initUnit: resultUnit,
+        returnNum: 'none',
+        returnUnit: 'none',
+        string: resultString,
+      };
     }
 
-    res.json(result);
+    res.json(convertedResultObj ? { ...convertedResultObj } : resultString);
   });
 };
