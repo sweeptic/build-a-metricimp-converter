@@ -90,8 +90,8 @@ suite('getUnit Unit Tests', function () {
   //(gal|L|mi|km|lbs|kg)
   test('convertHandler should correctly read each valid input unit. ', () => {
     assert.strictEqual(convertHandler.getUnit('1/2.5gAl'), 'gal');
-    assert.strictEqual(convertHandler.getUnit('1/2.5L'), 'L');
-    assert.strictEqual(convertHandler.getUnit('1/2.5l'), 'L');
+    assert.strictEqual(convertHandler.getUnit('1/2.5L'), 'l');
+    assert.strictEqual(convertHandler.getUnit('1/2.5l'), 'l');
     assert.strictEqual(convertHandler.getUnit('1/2.5MI'), 'mi');
     assert.strictEqual(convertHandler.getUnit('1/2.5kM'), 'km');
     assert.strictEqual(convertHandler.getUnit('1/2.5LbS'), 'lbs');
@@ -105,7 +105,7 @@ suite('getUnit Unit Tests', function () {
 
   test('convertHandler should return the correct return unit for each valid input unit. ', () => {
     assert.strictEqual(convertHandler.getUnit('1/2.5gal'), 'gal');
-    assert.strictEqual(convertHandler.getUnit('1/2.5L'), 'L');
+    assert.strictEqual(convertHandler.getUnit('1/2.5L'), 'l');
     assert.strictEqual(convertHandler.getUnit('1/2.5mi'), 'mi');
     assert.strictEqual(convertHandler.getUnit('1/2.5km'), 'km');
     assert.strictEqual(convertHandler.getUnit('1/2.5lbs'), 'lbs');

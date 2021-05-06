@@ -8,8 +8,10 @@ module.exports = function (app) {
   app.route('/api/convert').get(function (req, res) {
     const { input } = req.query;
 
+    // console.log(input);
+
     const resultNum = convertHandler.getNum(input);
-    const resultUnit = convertHandler.getUnit(input);
+    let resultUnit = convertHandler.getUnit(input);
 
     let resultString;
     let convertedResultObj;
@@ -25,7 +27,10 @@ module.exports = function (app) {
       }
     } else {
       const convertedNum = convertHandler.convert(resultNum, resultUnit);
-      const convertedUnit = convertHandler.getReturnUnit(resultUnit);
+      let convertedUnit = convertHandler.getReturnUnit(resultUnit);
+
+      resultUnit = convertHandler.letterTransformationFunc(resultUnit);
+      convertedUnit = convertHandler.letterTransformationFunc(convertedUnit);
 
       resultString = convertHandler.getString(
         resultNum,
