@@ -1,7 +1,6 @@
 class ConvertHandler {
   constructor() {
-    // const units = /^(gal|L|mi|km|lbs|kg)$/i;
-    this.conversionDictionary = {
+    this.convDict = {
       gal: ['gallons', 3.78541, 'l', false],
       l: ['liters', 0.264172176857989, 'gal', true],
       mi: ['miles', 1.60934, 'km', false],
@@ -9,77 +8,54 @@ class ConvertHandler {
       lbs: ['pounds', 0.453592, 'kg', false],
       kg: ['kilograms', 2.204624420183777, 'lbs', false],
     };
-    this.startsWithDigit = /^\d+(\.\d+)?(\/\d+(\.\d+)?)?$/;
+    this.numPattern = /^\d+(\.\d+)?(\/\d+(\.\d+)?)?$/;
     this.firsLetter = /[a-zA-Z]/;
 
     this.getNum = input => {
       let result;
+      const num = input.slice(0, this.getFirstLetter(input));
+      const digits = num.match(this.numPattern);
 
-      const toFirstLetter = input.slice(
-        0,
-        input.match(this.firsLetter)
-          ? input.match(this.firsLetter).index
-          : input.length
-      );
-
-      const digitMatches = toFirstLetter.match(this.startsWithDigit);
-
-      const onlyUnitMatches = this.conversionDictionary[input.toLowerCase()];
-
-      //if starts with valid unit and not digit. this should be 1
-      if (onlyUnitMatches) {
+      if (this.convDict[input.toLowerCase()]) {
         result = 1;
-      }
+      } else if (digits !== null) {
+        const match = digits[0];
+        const fSlashIdx = match.indexOf('/');
 
-      //if any matches
-      //
-      else if (digitMatches !== null) {
-        const match = digitMatches[0];
-
-        //analyze matched unit
-        //if fractional unit
-        if (match.includes('/')) {
-          result =
-            +match.slice(0, match.indexOf('/')) /
-            +match.slice(match.indexOf('/') + 1, match.length);
-        } else {
-          //else is whole or decimal number
-          result = +digitMatches[0];
-        }
-      }
-
-      //if does not matches any
-      else {
+        result =
+          fSlashIdx > 0
+            ? match.slice(0, fSlashIdx) /
+              match.slice(fSlashIdx + 1, match.length)
+            : +digits[0];
+      } else {
         result = false;
       }
 
       return result;
     };
 
-    this.getUnit = input => {
-      const fromFirstLetter = input
-        .slice(
-          input.match(this.firsLetter)
-            ? input.match(this.firsLetter).index
-            : input.length
-        )
-        .toLowerCase();
+    this.getFirstLetter = input => {
+      return input.match(this.firsLetter)
+        ? input.match(this.firsLetter).index
+        : input.length;
+    };
 
-      return this.conversionDictionary[fromFirstLetter]
-        ? fromFirstLetter
-        : false;
+    this.getUnit = input => {
+      const unit = input.slice(this.getFirstLetter(input)).toLowerCase();
+
+      return this.convDict[unit] ? unit : false;
     };
 
     this.getReturnUnit = initUnit => {
-      return this.conversionDictionary[initUnit][2];
+      return this.convDict[initUnit][2];
     };
 
     this.spellOutUnit = unit => {
-      return this.conversionDictionary[unit.toLowerCase()][0];
+      return this.convDict[unit.toLowerCase()][0];
     };
 
     this.convert = (initNum, initUnit) => {
-      return +(initNum * this.conversionDictionary[initUnit][1]).toFixed(5);
+      return +(initNum * this.convDict[initUnit][1]).toFixed(5);
     };
 
     this.getString = (initNum, initUnit, returnNum, returnUnit) => {
@@ -89,7 +65,7 @@ class ConvertHandler {
     };
 
     this.letterTransformationFunc = unit => {
-      return this.conversionDictionary[unit][3] ? unit.toUpperCase() : unit;
+      return this.convDict[unit][3] ? unit.toUpperCase() : unit;
     };
   }
 }

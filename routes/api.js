@@ -3,18 +3,14 @@ const expect = require('chai').expect;
 const ConvertHandler = require('../controllers/convertHandler.js');
 
 module.exports = function (app) {
-  let convertHandler = new ConvertHandler();
-
-  console.log(convertHandler);
+  const convertHandler = new ConvertHandler();
 
   app.route('/api/convert').get(function (req, res) {
     const { input } = req.query;
-
     const resultNum = convertHandler.getNum(input);
-    let resultUnit = convertHandler.getUnit(input);
-
-    let resultString;
-    let convertedResultObj;
+    let resultString,
+      convertedResultObj,
+      resultUnit = convertHandler.getUnit(input);
 
     //if get some false(invalid) from getNum or/and getUnit function.
     if (!resultNum || !resultUnit) {
