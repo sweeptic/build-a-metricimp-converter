@@ -2,13 +2,20 @@ function ConvertHandler() {
   this.getNum = function (input) {
     let result;
 
-    const regex = /^\d+(\.\d+)?\/\d+(\.\d+)?|^\d+(\.\d+)?/;
+    const startsWithDigit = /^\d+(\.\d+)?(\/\d+(\.\d+)?)?/;
+    const startsWithUnit = /^(gal|L|mi|km|lbs|kg)$/;
 
-    let matches = input.match(regex);
+    const digitMatches = input.match(startsWithDigit);
+    const onlyUnitMatches = input.match(startsWithUnit);
+
+    //if starts with valid unit and not digit. this should be 1
+    if (onlyUnitMatches) {
+      result = 1;
+    }
 
     //if any matches
-    if (matches !== null) {
-      const match = matches[0];
+    else if (digitMatches !== null) {
+      const match = digitMatches[0];
 
       //analyze matched unit
       //if fractional unit
@@ -19,11 +26,12 @@ function ConvertHandler() {
       } else {
         //
         //else is whole or decimal number
-        result = +matches[0];
+        result = +digitMatches[0];
       }
     } else {
       //if does not matches any
       result = null;
+      // console.log('invalid number');
     }
 
     return result;

@@ -4,7 +4,7 @@ const ConvertHandler = require('../controllers/convertHandler.js');
 
 let convertHandler = new ConvertHandler();
 
-suite('Unit Tests', function () {
+suite('GetNum Unit Tests', function () {
   test('convertHandler should correctly read a whole number input. ', () => {
     assert.strictEqual(convertHandler.getNum('1'), 1);
     assert.strictEqual(convertHandler.getNum('12gal'), 12);
@@ -58,6 +58,28 @@ suite('Unit Tests', function () {
     assert.isNull(convertHandler.getNum('  2.33/3.1mi'));
     assert.isNull(convertHandler.getNum('  mi23.2/2'));
   });
+
+  test('convertHandler should correctly default to a numerical input of 1 when no numerical input is provided. ', () => {
+    assert.strictEqual(convertHandler.getNum('gal'), 1);
+    assert.strictEqual(convertHandler.getNum('L'), 1);
+    assert.strictEqual(convertHandler.getNum('mi'), 1);
+    assert.strictEqual(convertHandler.getNum('km'), 1);
+    assert.strictEqual(convertHandler.getNum('lbs'), 1);
+    assert.strictEqual(convertHandler.getNum('kg'), 1);
+  });
+});
+
+suite('GetNum Unit Tests', function () {
+  test('convertHandler should correctly return an error on a double-fraction (i.e. 3/2/3). ', () => {
+    //  assert.isNull(convertHandler.getUnit('3/4/5'));
+    //  assert.isNull(convertHandler.getUnit('3.4/4/5'));
+    //  assert.isNull(convertHandler.getUnit('3/4.4/5'));
+    //  assert.isNull(convertHandler.getUnit('3/4/5.5'));
+  });
+
+  test('convertHandler should correctly read each valid input unit. ', () => {});
+
+  test('convertHandler should correctly return an error for an invalid input unit. ', () => {});
 });
 
 /*
@@ -65,10 +87,10 @@ suite('Unit Tests', function () {
 
 
 
-convertHandler should correctly return an error on a double-fraction (i.e. 3/2/3).
-convertHandler should correctly default to a numerical input of 1 when no numerical input is provided.
-convertHandler should correctly read each valid input unit.
-convertHandler should correctly return an error for an invalid input unit.
+
+
+
+
 convertHandler should return the correct return unit for each valid input unit.
 convertHandler should correctly return the spelled-out string unit for each valid input unit.
 convertHandler should correctly convert gal to L.
