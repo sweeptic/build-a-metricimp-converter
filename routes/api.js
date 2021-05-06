@@ -5,10 +5,10 @@ const ConvertHandler = require('../controllers/convertHandler.js');
 module.exports = function (app) {
   let convertHandler = new ConvertHandler();
 
+  console.log(convertHandler);
+
   app.route('/api/convert').get(function (req, res) {
     const { input } = req.query;
-
-    // console.log(input);
 
     const resultNum = convertHandler.getNum(input);
     let resultUnit = convertHandler.getUnit(input);
