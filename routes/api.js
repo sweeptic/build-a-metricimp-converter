@@ -14,8 +14,9 @@ module.exports = function (app) {
     console.log(resultNum);
     console.log(resultUnit);
 
-    let result;
+    let result = 'default';
 
+    //if get some false from getNum or/and getUnit function.
     if (!resultNum || !resultUnit) {
       if (!resultNum && !resultUnit) {
         result = 'invalid number and unit';
@@ -24,6 +25,8 @@ module.exports = function (app) {
       } else {
         result = 'invalid unit';
       }
+    } else {
+      result = `${resultNum} ${resultUnit} converts to `;
     }
 
     res.json(result);

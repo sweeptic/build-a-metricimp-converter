@@ -89,17 +89,27 @@ suite('getUnit Unit Tests', function () {
   });
   //(gal|L|mi|km|lbs|kg)
   test('convertHandler should correctly read each valid input unit. ', () => {
-    assert.strictEqual(convertHandler.getUnit('1/2.5gal'), 'gal');
+    assert.strictEqual(convertHandler.getUnit('1/2.5gal'), 'gallons');
     assert.strictEqual(convertHandler.getUnit('1/2.5L'), 'L');
-    assert.strictEqual(convertHandler.getUnit('1/2.5mi'), 'mi');
-    assert.strictEqual(convertHandler.getUnit('1/2.5km'), 'km');
-    assert.strictEqual(convertHandler.getUnit('1/2.5lbs'), 'lbs');
-    assert.strictEqual(convertHandler.getUnit('1/2.5kg'), 'kg');
-    assert.strictEqual(convertHandler.getUnit('1kg'), 'kg');
+    assert.strictEqual(convertHandler.getUnit('1/2.5mi'), 'miles');
+    assert.strictEqual(convertHandler.getUnit('1/2.5km'), 'kilometers');
+    assert.strictEqual(convertHandler.getUnit('1/2.5lbs'), 'pounds');
+    assert.strictEqual(convertHandler.getUnit('1/2.5kg'), 'kilograms');
+    assert.strictEqual(convertHandler.getUnit('1kg'), 'kilograms');
   });
 
   test('convertHandler should correctly return an error for an invalid input unit. ', () => {
     assert.strictEqual(convertHandler.getUnit('1/2.5kghhh'), false);
+  });
+
+  test('convertHandler should return the correct return unit for each valid input unit. ', () => {
+    assert.strictEqual(convertHandler.getUnit('1/2.5gal'), 'gallons');
+    assert.strictEqual(convertHandler.getUnit('1/2.5L'), 'L');
+    assert.strictEqual(convertHandler.getUnit('1/2.5mi'), 'miles');
+    assert.strictEqual(convertHandler.getUnit('1/2.5km'), 'kilometers');
+    assert.strictEqual(convertHandler.getUnit('1/2.5lbs'), 'pounds');
+    assert.strictEqual(convertHandler.getUnit('1/2.5kg'), 'kilograms');
+    assert.strictEqual(convertHandler.getUnit('1kg'), 'kilograms');
   });
 });
 
@@ -112,7 +122,7 @@ suite('getUnit Unit Tests', function () {
 
 
 
-convertHandler should return the correct return unit for each valid input unit.
+
 convertHandler should correctly return the spelled-out string unit for each valid input unit.
 convertHandler should correctly convert gal to L.
 convertHandler should correctly convert L to gal.

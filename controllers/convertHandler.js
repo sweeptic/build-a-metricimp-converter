@@ -1,18 +1,28 @@
 function ConvertHandler() {
+  const units = /^(gal|L|mi|km|lbs|kg)$/;
+  const firsLetter = /[a-zA-Z]/;
+  const dictionary = {
+    gal: 'gallons',
+    L: 'L',
+    mi: 'miles',
+    km: 'kilometers',
+    lbs: 'pounds',
+    kg: 'kilograms',
+  };
+
   this.getNum = function (input) {
     let result;
 
     const startsWithDigit = /^\d+(\.\d+)?(\/\d+(\.\d+)?)?$/;
-    const startsWithUnit = /^(gal|L|mi|km|lbs|kg)$/;
+    // const startsWithUnit = /^(gal|L|mi|km|lbs|kg)$/;
 
-    const firsLetter = /[a-zA-Z]/;
     const toFirstLetter = input.slice(
       0,
       input.match(firsLetter) ? input.match(firsLetter).index : input.length
     );
 
     const digitMatches = toFirstLetter.match(startsWithDigit);
-    const onlyUnitMatches = input.match(startsWithUnit);
+    const onlyUnitMatches = input.match(units);
 
     // console.log(toFirstLetter.length);
 
@@ -21,10 +31,6 @@ function ConvertHandler() {
       result = 1;
     }
 
-    // else if (toFirstLetter.length === 0) {
-    //   return;
-    // }
-    //
     //if any matches
     //
     else if (digitMatches !== null) {
@@ -34,8 +40,8 @@ function ConvertHandler() {
       //if fractional unit
       if (match.includes('/')) {
         result =
-          match.slice(0, match.indexOf('/')) /
-          match.slice(match.indexOf('/') + 1, match.length);
+          +match.slice(0, match.indexOf('/')) /
+          +match.slice(match.indexOf('/') + 1, match.length);
       } else {
         //else is whole or decimal number
         result = +digitMatches[0];
@@ -50,22 +56,11 @@ function ConvertHandler() {
   };
 
   this.getUnit = function (input) {
-    let result;
-
-    const units = /^(gal|L|mi|km|lbs|kg)$/;
-    const firsLetter = /[a-zA-Z]/;
-
     const fromFirstLetter = input.slice(
       input.match(firsLetter) ? input.match(firsLetter).index : input.length
     );
 
-    // const onlyUnitMatches = fromFirstLetter.match(units);
-
-    result = fromFirstLetter.match(units) ? fromFirstLetter : false;
-
-    // console.log(fromFirstLetter);
-
-    return result;
+    return fromFirstLetter.match(units) ? dictionary[fromFirstLetter] : false;
   };
 
   this.getReturnUnit = function (initUnit) {
