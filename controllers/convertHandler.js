@@ -1,6 +1,6 @@
 class ConvertHandler {
   constructor() {
-    this.convDict = {
+    this.store = {
       gal: ['gallons', 3.78541, 'l', false],
       l: ['liters', 0.264172176857989, 'gal', true],
       mi: ['miles', 1.60934, 'km', false],
@@ -16,7 +16,7 @@ class ConvertHandler {
       const num = input.slice(0, this.getFirstLetter(input));
       const digits = num.match(this.numPattern);
 
-      if (this.convDict[input.toLowerCase()]) {
+      if (this.store[input.toLowerCase()]) {
         result = 1;
       } else if (digits !== null) {
         const match = digits[0];
@@ -43,19 +43,19 @@ class ConvertHandler {
     this.getUnit = input => {
       const unit = input.slice(this.getFirstLetter(input)).toLowerCase();
 
-      return this.convDict[unit] ? unit : false;
+      return this.store[unit] ? unit : false;
     };
 
     this.getReturnUnit = initUnit => {
-      return this.convDict[initUnit][2];
+      return this.store[initUnit][2];
     };
 
     this.spellOutUnit = unit => {
-      return this.convDict[unit.toLowerCase()][0];
+      return this.store[unit.toLowerCase()][0];
     };
 
     this.convert = (initNum, initUnit) => {
-      return +(initNum * this.convDict[initUnit][1]).toFixed(5);
+      return +(initNum * this.store[initUnit][1]).toFixed(5);
     };
 
     this.getString = (initNum, initUnit, returnNum, returnUnit) => {
@@ -65,7 +65,7 @@ class ConvertHandler {
     };
 
     this.letterTransformationFunc = unit => {
-      return this.convDict[unit][3] ? unit.toUpperCase() : unit;
+      return this.store[unit][3] ? unit.toUpperCase() : unit;
     };
   }
 }
