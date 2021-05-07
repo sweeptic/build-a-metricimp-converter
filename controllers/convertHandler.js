@@ -9,7 +9,7 @@ class ConvertHandler {
       kg: ['kilograms', 2.204624420183777, 'lbs', false],
     };
     this.numPattern = /^\d+(\.\d+)?(\/\d+(\.\d+)?)?$/;
-    this.firsLetter = /[a-zA-Z]/;
+    this.letterPattern = /[a-zA-Z]/;
 
     this.getNum = input => {
       let result;
@@ -35,8 +35,8 @@ class ConvertHandler {
     };
 
     this.getFirstLetter = input => {
-      return input.match(this.firsLetter)
-        ? input.match(this.firsLetter).index
+      return input.match(this.letterPattern)
+        ? input.match(this.letterPattern).index
         : input.length;
     };
 
